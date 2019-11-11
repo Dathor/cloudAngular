@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="login">
+        <h2>Login</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <mat-form-field>
+                <input matInput placeholder="User name" formControlName="login">
+            </mat-form-field>
+            <button mat-button type="submit" [disabled]="!loginForm.valid">Login</button>
+            <mat-error *ngIf="loginForm.get('login').errors?.required && loginForm.get('login').touched">Username is required</mat-error>
+            <mat-error *ngIf="loginForm.get('login').errors?.serverError && loginForm.get('login').touched">{{loginForm.get('login').errors?.serverError}}</mat-error>
+        </form>
+    </div>
+    
+    <div class="register">
+        <h2>Register</h2>
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
+            <mat-form-field>
+                <input matInput placeholder="User name" formControlName="register">
+            </mat-form-field>
+            <button mat-button type="submit" [disabled]="!registerForm.valid">Register</button>
+            <mat-error *ngIf="registerForm.get('register').errors?.required && registerForm.get('register').touched">Username is required</mat-error>
+            <mat-error *ngIf="registerForm.get('register').errors?.serverError && registerForm.get('register').touched">{{registerForm.get('register').errors?.serverError}}</mat-error>
+        </form>
+    </div>
+</div>
+

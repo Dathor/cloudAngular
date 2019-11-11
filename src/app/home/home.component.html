@@ -1,0 +1,40 @@
+<form class="follow-form" [formGroup]="followForm" (ngSubmit)="follow()">
+    <mat-form-field>
+        <input matInput formControlName="follow" matInput placeholder="Follow">
+    </mat-form-field>
+    <button mat-button type="submit" [disabled]="!followForm.valid" color="primary">Follow</button>
+    <mat-error *ngIf="followForm.get('follow').errors?.required && followForm.get('follow').touched">Username is required</mat-error>
+    <mat-error *ngIf="followForm.get('follow').errors?.serverError && followForm.get('follow').touched">{{followForm.get('follow').errors?.serverError}}</mat-error>
+</form>
+
+<mat-card class="post-field">
+    <form [formGroup]="postForm" (ngSubmit)="post()">
+        <mat-form-field class="post-input">
+                <textarea formControlName="post" matInput placeholder="Post" rows="2"></textarea>
+        </mat-form-field>
+        <button mat-button type="submit" [disabled]="!postForm.valid" color="primary">Post</button>
+        <mat-error *ngIf="postForm.get('post').errors?.required && postForm.get('post').dirty">Posts can't be empty</mat-error>
+    </form>
+</mat-card>
+
+<mat-card *ngFor="let post of posts">
+    <mat-card-header>
+        <mat-card-title>{{post.name}}:</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <span *ngIf="!post.editing">
+            {{post.post}}
+        </span>
+        <div *ngIf="post.editing">
+            <mat-form-field floatLabel="always" class="post-edit">
+                <textarea matInput id="{{'post' + post.id}}">{{post.post}}</textarea>
+            </mat-form-field>
+            <mat-error *ngIf="post.err">Posts can't be empty</mat-error>
+        </div>
+    </mat-card-content>    
+    <mat-card-actions *ngIf="post.name === 'You'">
+        <button mat-button (click)="openEdit(post)">Edit</button>
+        <button mat-button *ngIf="post.editing" (click)="cancelEdit(post)">Cancel</button>
+        <button mat-button (click)="deletePost(post)">Delete</button>
+    </mat-card-actions>
+</mat-card>

@@ -1,0 +1,13 @@
+.container{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.login{
+    grid-column: 1 / 1;
+    margin-left: 20px;
+}
+
+.register{
+    grid-column: 2 / 2;
+}
